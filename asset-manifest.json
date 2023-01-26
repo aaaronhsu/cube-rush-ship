@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/cube-rush-ship/static/js/main.ee7c6411.js",
+    "main.js": "/cube-rush-ship/static/js/main.b67f538c.js",
     "static/js/787.be91356e.chunk.js": "/cube-rush-ship/static/js/787.be91356e.chunk.js",
     "index.html": "/cube-rush-ship/index.html",
-    "main.ee7c6411.js.map": "/cube-rush-ship/static/js/main.ee7c6411.js.map",
+    "main.b67f538c.js.map": "/cube-rush-ship/static/js/main.b67f538c.js.map",
     "787.be91356e.chunk.js.map": "/cube-rush-ship/static/js/787.be91356e.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.ee7c6411.js"
+    "static/js/main.b67f538c.js"
   ]
 }
