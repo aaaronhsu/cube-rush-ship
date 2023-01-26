@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Text, Divider } from '@chakra-ui/react';
+import { Container, Text, Divider, Spacer, Flex, Button } from '@chakra-ui/react';
 
 import Item from './Item';
 
@@ -31,7 +31,13 @@ export default class ItemList extends React.Component {
 
     renderAddItemButton = () => {
         return (
-            <button onClick={this.addItem}>Add Item</button>
+            <Button onClick={this.addItem}>Add Item</Button>
+        );
+    }
+
+    renderProcessButton = () => {
+        return (
+            <Button onClick={() => this.props.nextPage(1)}>Process</Button>
         );
     }
 
@@ -48,7 +54,12 @@ export default class ItemList extends React.Component {
                     ))
                 }
 
-                {this.renderAddItemButton()}
+                <Flex>
+                    {this.renderAddItemButton()}
+                    <Spacer />
+                    {this.renderProcessButton()}
+                </Flex>
+
 
             </Container>
 
