@@ -10,10 +10,63 @@ export default class Home extends React.Component {
     constructor(props) {
         super(props);
 
+        let sampleProject = {
+            name: 'Sample House',
+            number: 0,
+            items: [
+                {
+                    itemName: 'Concrete',
+                    currentQuantity: 0,
+                    requiredQuantity: 540,
+                },
+                {
+                    itemName: 'Steel',
+                    currentQuantity: 0,
+                    requiredQuantity: 15,
+                },
+                {
+                    itemName: 'Lumber',
+                    currentQuantity: 0,
+                    requiredQuantity: 20,
+                },
+                {
+                    itemName: 'Asphalt',
+                    currentQuantity: 0,
+                    requiredQuantity: 16,
+                },
+                {
+                    itemName: 'Brick',
+                    currentQuantity: 0,
+                    requiredQuantity: 9,
+                },
+                {
+                    itemName: 'Copper Piping',
+                    currentQuantity: 0,
+                    requiredQuantity: 300,
+                },
+                {
+                    itemName: 'Drywall',
+                    currentQuantity: 0,
+                    requiredQuantity: 1500,
+                },
+                {
+                    itemName: 'Insulation',
+                    currentQuantity: 0,
+                    requiredQuantity: 1500,
+                },
+                {
+                    itemName: 'Roofing Shingles',
+                    currentQuantity: 0,
+                    requiredQuantity: 3000,
+                },
+            ],
+            time: 45,
+        }
+
         this.state = {
             currentPage: 1,
             currentProject: -1,
-            projects: [],
+            projects: [sampleProject],
         };
     }
 

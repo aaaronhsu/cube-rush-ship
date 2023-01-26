@@ -45,6 +45,7 @@ export default class CostEstimate extends React.Component {
                 "Roofing Shingles": 7,
             },
             totalCost: 0,
+            totalCostLabor: 0,
         };
     }
 
@@ -54,13 +55,17 @@ export default class CostEstimate extends React.Component {
 
     calculateTotalCost = () => {
         let totalCost = 0;
+        let totalCostLabor = 0;
 
         this.props.projectInfo.items.forEach(item => {
             if (item.itemName !== 'Holder Name' && item.requiredQuantity !== 0)
             totalCost += this.calculateCost(item) * (item.requiredQuantity - item.currentQuantity);
+
+            let highCost = this.state.highCosts[item.itemName];
+            totalCostLabor += highCost * item.requiredQuantity;
         });
 
-        this.setState({ totalCost: totalCost });
+        this.setState({ totalCost: totalCost, totalCostLabor: totalCostLabor });
     }
 
     calculateCost = (item) => {
@@ -84,23 +89,23 @@ export default class CostEstimate extends React.Component {
         switch (item) {
 
             case 'Concrete':
-                return 'cubic feet of ' + item.toLowerCase();
+                return 'cubic feet of ' + item;
             case 'Steel':
-                return 'tons of ' + item.toLowerCase();
+                return 'tons of ' + item;
             case 'Lumber':
-                return 'thousands of board feet of ' + item.toLowerCase();
+                return 'thousands of board feet of ' + item;
             case 'Asphalt':
-                return 'tons of ' + item.toLowerCase();
+                return 'tons of ' + item;
             case 'Brick':
-                return 'thousand ' + item.toLowerCase() + 's';
+                return 'thousand ' + item + 's';
             case 'Copper Piping':
-                return 'feet of ' + item.toLowerCase();
+                return 'feet of ' + item;
             case 'Drywall':
-                return 'square feet of ' + item.toLowerCase();
+                return 'square feet of ' + item;
             case 'Insulation':
-                return 'square feet of ' + item.toLowerCase();
+                return 'square feet of ' + item;
             case 'Roofing Shingles':
-                return 'square feet of ' + item.toLowerCase();
+                return 'square feet of ' + item;
             default:
                 return 'select an item';
         }
@@ -110,22 +115,24 @@ export default class CostEstimate extends React.Component {
         return (
             item.itemName === 'Holder Name' || item.requiredQuantity === 0 ? null :
             
+            item.currentQuantity >= item.requiredQuantity ?
+            <ListItem>
+                <ListIcon as={CheckCircleIcon} color='green.500' />
+                You have enough {item.itemName} to complete your project.
+            </ListItem> :
+
+            
             this.state.shipTime[item.itemName] > parseInt(this.props.projectInfo.time) ?
             <ListItem>
                 <ListIcon as={WarningIcon} color='red.500' />
                 There is not enough time have {item.itemName} shipped in {this.props.projectInfo.time} days. The item will take {this.state.shipTime[item.itemName]} days to ship.
             </ListItem> :
 
-            item.requiredQuantity > item.currentQuantity ?
             <ListItem>
                 <ListIcon as={WarningTwoIcon} color='yellow.500' />
                 At the unit rate of ${this.calculateCost(item)}, you can purchase {item.requiredQuantity - item.currentQuantity} {this.determineUnits(item.itemName)} for ${this.calculateCost(item) * (item.requiredQuantity - item.currentQuantity)}
-            </ListItem> :
-
-            <ListItem>
-                <ListIcon as={CheckCircleIcon} color='green.500' />
-                You have enough {item.itemName} to complete your project.
             </ListItem>
+
         );
     }
 
@@ -161,11 +168,11 @@ export default class CostEstimate extends React.Component {
 
                 {this.renderCosts()}
 
-                <Text my="20px">Based on the current market prices, the materials for your construction project will cost ${this.state.totalCost}.</Text>
+                <Text my="20px">Based on the current market prices, the materials for your construction project will cost <span className="bold">${this.state.totalCost}</span>.</Text>
 
-                <Text my="20px">Accounting for labor cost in your area, your construction project is likely to cost between ${Math.round(this.state.totalCost * 1.2)} and ${Math.round(this.state.totalCost * 1.4)}.</Text>
+                <Text my="20px">Accounting for labor cost in your area, your construction project is likely to cost between <span className="bold">${Math.round(this.state.totalCostLabor * 0.2 + this.state.totalCost)}</span> and <span className="bold">${Math.round(this.state.totalCostLabor * 0.4 + this.state.totalCost)}</span>.</Text>
 
-                <Flex>
+                <Flex mb="20px">
                     {this.renderBackButton()}
                     <Spacer />
                     {this.renderMenuButton()}

@@ -88,7 +88,7 @@ export default class ItemList extends React.Component {
                 </NumberInput>
 
 
-                <Flex mt="50px">
+                <Flex mt="50px" mb="20px">
                     {this.renderAddItemButton()}
                     <Spacer />
                     {this.renderBackButton()}
