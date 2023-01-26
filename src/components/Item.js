@@ -47,19 +47,19 @@ export default class Item extends React.Component {
     updateItemSelect = (itemName) => {
         let newItems = [...this.props.items];
         newItems[this.props.index].itemName = itemName;
-        this.props.updateProject(newItems);
+        this.props.updateProjectItems(newItems);
     }
 
     updateCurrentQuantity = (currentQuantity) => {
         let newItems = [...this.props.items];
         newItems[this.props.index].currentQuantity = currentQuantity;
-        this.props.updateProject(newItems);
+        this.props.updateProjectItems(newItems);
     }
 
     updateRequiredQuantity = (requiredQuantity) => {
         let newItems = [...this.props.items];
         newItems[this.props.index].requiredQuantity = requiredQuantity;
-        this.props.updateProject(newItems);
+        this.props.updateProjectItems(newItems);
     }
 
 
@@ -94,10 +94,18 @@ export default class Item extends React.Component {
         return (
             <GridItem w='100%' h='10' bg='white.500'>
                 <Tooltip label={this.determineUnits()}>Current Quantity</Tooltip>
+
+                {
+                    this.props.items[this.props.index].currentQuantity === 0 ?
+                    <Input placeholder={this.determineUnits()} textColor='black' onChange={(event) => {
+                        this.updateCurrentQuantity(parseInt(event.target.value));
+                    }}/>
+                    :
+                    <Input defaultValue={this.props.items[this.props.index].currentQuantity} textColor='black' onChange={(event) => {
+                        this.updateCurrentQuantity(parseInt(event.target.value));
+                    }}/>
+                }
                 
-                <Input placeholder={this.determineUnits()} textColor='black' onChange={(event) => {
-                    this.updateCurrentQuantity(parseInt(event.target.value));
-                }}/>
 
             </GridItem>
         );
@@ -108,9 +116,16 @@ export default class Item extends React.Component {
             <GridItem w='100%' h='10' bg='white.500'>
                 <Tooltip label={this.determineUnits()}>Required Quantity</Tooltip>
                 
-                <Input placeholder={this.determineUnits()} textColor='black' onChange={(event) => {
-                    this.updateRequiredQuantity(parseInt(event.target.value));
-                }}/>
+                {
+                    this.props.items[this.props.index].requiredQuantity === 0 ?
+                    <Input placeholder={this.determineUnits()} textColor='black' onChange={(event) => {
+                        this.updateRequiredQuantity(parseInt(event.target.value));
+                    }}/>
+                    :
+                    <Input defaultValue={this.props.items[this.props.index].requiredQuantity} textColor='black' onChange={(event) => {
+                        this.updateRequiredQuantity(parseInt(event.target.value));
+                    }}/>
+                }
 
             </GridItem>
         );

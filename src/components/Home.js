@@ -3,6 +3,7 @@ import React from 'react';
 import { Container, Text, SimpleGrid, Button } from '@chakra-ui/react';
 
 import ItemList from './ItemList';
+import CostEstimate from './CostEstimate';
 
 export default class Home extends React.Component {
 
@@ -43,6 +44,7 @@ export default class Home extends React.Component {
             name: 'Project ' + (this.state.projects.length + 1),
             number: this.state.projects.length,
             items: newItems,
+            time: 60,
         };
 
         newProjects.push(newProject);
@@ -54,10 +56,12 @@ export default class Home extends React.Component {
         });
     }
 
-    updateProject = (items) => {
+    updateProjectItems = (items) => {
         let newProjects = [...this.state.projects];
         newProjects[this.state.currentProject].items = items;
         this.setState({projects: newProjects});
+        console.log("saved project");
+        console.log(this.state.projects[this.state.currentProject].items);
     }
 
     render() {
@@ -88,16 +92,27 @@ export default class Home extends React.Component {
                     </div>
                     :
 
+                    this.state.currentPage === 2 ?
+
                     <div>
                         <ItemList 
                             changePage={(inc) => this.changePage(inc)} 
                             projectInfo={this.state.projects[this.state.currentProject]}
-                            updateProject={(items) => this.updateProject(items)}
+                            updateProjectItems={(items) => this.updateProjectItems(items)}
                         >
 
                         </ItemList>
+                    </div>
 
+                    :
 
+                    <div>
+                        <CostEstimate
+                            changePage={(inc) => this.changePage(inc)} 
+                            projectInfo={this.state.projects[this.state.currentProject]}
+                        >
+
+                        </CostEstimate>
                     </div>
                 }
 

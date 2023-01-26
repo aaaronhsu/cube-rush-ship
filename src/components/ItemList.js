@@ -24,7 +24,7 @@ export default class ItemList extends React.Component {
         newItems.push(newItem);
 
         console.log("Added Item");
-        this.props.updateProject(newItems);
+        this.props.updateProjectItems(newItems);
 
     }
 
@@ -59,7 +59,7 @@ export default class ItemList extends React.Component {
                     this.props.projectInfo.items.map((item, index) => (
                         <span key={item.id}> 
                                 <Item
-                                    updateProject={(items) => this.props.updateProject(items)}
+                                    updateProjectItems={(items) => this.props.updateProjectItems(items)}
                                     items={this.props.projectInfo.items}
                                     index={index}
                                     >
