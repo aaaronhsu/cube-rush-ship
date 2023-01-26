@@ -30,7 +30,7 @@ export default class ItemList extends React.Component {
 
     renderBackButton = () => {
         return (
-            <Button onClick={(inc) => this.props.changePage(-1)}>Back</Button>
+            <Button onClick={(inc) => this.props.changePage(-1)}>Return to Projects</Button>
         );
     }
 
@@ -50,7 +50,7 @@ export default class ItemList extends React.Component {
         return (
             <Container mt="50px" mb="0">
 
-                {this.renderBackButton()}
+                <Text fontSize="3xl" my="10px">{this.props.projectInfo.name}</Text>
 
                 <Text>List of Items</Text>
                 <Divider mb="20px" />
@@ -62,7 +62,7 @@ export default class ItemList extends React.Component {
                                     updateProject={(items) => this.props.updateProject(items)}
                                     items={this.props.projectInfo.items}
                                     index={index}
-                                >
+                                    >
                                 
                                 </Item>
                         </span>
@@ -71,6 +71,8 @@ export default class ItemList extends React.Component {
 
                 <Flex>
                     {this.renderAddItemButton()}
+                    <Spacer />
+                    {this.renderBackButton()}
                     <Spacer />
                     {this.renderProcessButton()}
                 </Flex>

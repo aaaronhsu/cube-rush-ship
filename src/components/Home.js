@@ -35,6 +35,7 @@ export default class Home extends React.Component {
             currentQuantity: 0,
             requiredQuantity: 0
         };
+
         let newItems = [];
         newItems.push(newItem);
 
@@ -43,6 +44,7 @@ export default class Home extends React.Component {
             number: this.state.projects.length,
             items: newItems,
         };
+
         newProjects.push(newProject);
 
         this.setState({
@@ -62,8 +64,6 @@ export default class Home extends React.Component {
         return (
             <Container>
 
-                {this.state.currentPage}
-
                 {
                     this.state.currentPage === 1 ?
 
@@ -76,7 +76,7 @@ export default class Home extends React.Component {
                                         height='80px' 
                                         onClick={(p) => this.changeProject(project.number)}
                                     >
-                                        Test
+                                        {project.name}
                                     </Button>
                                 ))
                             }
@@ -85,7 +85,6 @@ export default class Home extends React.Component {
 
                         </SimpleGrid>
 
-                        <Text>tyfawthyftu</Text>
                     </div>
                     :
 
