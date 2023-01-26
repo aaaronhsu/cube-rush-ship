@@ -51,12 +51,16 @@ export default class Item extends React.Component {
     }
 
     updateCurrentQuantity = (currentQuantity) => {
+        if (isNaN(currentQuantity)) currentQuantity = 0;
+
         let newItems = [...this.props.items];
         newItems[this.props.index].currentQuantity = currentQuantity;
         this.props.updateProjectItems(newItems);
     }
 
     updateRequiredQuantity = (requiredQuantity) => {
+        if (isNaN(requiredQuantity)) requiredQuantity = 0;
+
         let newItems = [...this.props.items];
         newItems[this.props.index].requiredQuantity = requiredQuantity;
         this.props.updateProjectItems(newItems);

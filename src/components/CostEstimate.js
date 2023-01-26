@@ -57,12 +57,19 @@ export default class CostEstimate extends React.Component {
         let totalCost = 0;
         let totalCostLabor = 0;
 
+
         this.props.projectInfo.items.forEach(item => {
-            if (item.itemName !== 'Holder Name' && item.requiredQuantity !== 0)
-            totalCost += this.calculateCost(item) * (item.requiredQuantity - item.currentQuantity);
+            let reqQuant = item.requiredQuantity;
+            let curQuant = item.currentQuantity;
+
+            if (isNaN(reqQuant)) reqQuant = 0;
+            if (isNaN(curQuant)) curQuant = 0;
+
+            if (item.itemName !== 'Holder Name' && reqQuant !== 0)
+            totalCost += this.calculateCost(item) * (reqQuant - curQuant);
 
             let highCost = this.state.highCosts[item.itemName];
-            totalCostLabor += highCost * item.requiredQuantity;
+            totalCostLabor += highCost * reqQuant;
         });
 
         this.setState({ totalCost: totalCost, totalCostLabor: totalCostLabor });
@@ -76,6 +83,9 @@ export default class CostEstimate extends React.Component {
         let currentQuantity = item.currentQuantity;
         let requiredQuantity = item.requiredQuantity;
         let time = this.props.projectInfo.time;
+
+        if (isNaN(currentQuantity)) currentQuantity = 0;
+        if (isNaN(requiredQuantity)) requiredQuantity = 0;
 
         if (currentQuantity < requiredQuantity) {
             cost = highCost - ((Math.min((time - shipTime), 10) / 10) * (highCost - lowCost));
