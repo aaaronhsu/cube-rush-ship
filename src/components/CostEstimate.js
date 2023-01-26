@@ -134,7 +134,9 @@ export default class CostEstimate extends React.Component {
 
                 {this.renderCosts()}
 
-                <Text my="20px">Based on the current market prices, your construction project will cost ${this.state.totalCost}.</Text>
+                <Text my="20px">Based on the current market prices, the materials for your construction project will cost ${this.state.totalCost}.</Text>
+
+                <Text my="20px">Accounting for labor cost in your area, your construction project is likely to cost between ${Math.round(this.state.totalCost * 1.2)} and ${Math.round(this.state.totalCost * 1.4)}.</Text>
 
                 <Flex>
                     {this.renderBackButton()}
