@@ -1,7 +1,8 @@
 import React from 'react';
 
 
-import { Container, Text, Flex, Spacer, Button, Divider } from '@chakra-ui/react';
+import { Container, Text, Flex, Spacer, Button, Divider, List, ListItem, ListIcon } from '@chakra-ui/react';
+import { CheckCircleIcon, WarningTwoIcon, WarningIcon } from '@chakra-ui/icons';
 
 
 export default class CostEstimate extends React.Component {
@@ -80,23 +81,36 @@ export default class CostEstimate extends React.Component {
 
     renderItem = (item) => {
         return (
-            <div>
-                {
-                    item.itemName === 'Holder Name' || (item.requiredQuantity === 0 && item.currentQuantity === 0) ? null
-                    :
-                    item.requiredQuantity > item.currentQuantity ?
-    
-                        <Container>
-                            <Text>Based off the current unit price of ${this.calculateCost(item)}, it will cost you ${this.calculateCost(item) * (item.requiredQuantity - item.currentQuantity)} to buy the remaining {item.requiredQuantity - item.currentQuantity} {item.itemName}</Text>
-                        </Container>
-    
-                        :
-    
-                        <Container>
-                            <Text>You have enough {item.itemName}</Text>
-                        </Container>
-                }
-            </div>
+            item.itemName === 'Holder Name' || item.requiredQuantity === 0 ? null :
+            
+            item.shipTime > this.props.projectInfo.time ?
+            <ListItem>
+                <ListIcon as={WarningIcon} color='red.500' />
+                There is not enough time have {item.itemName} shipped in {this.props.projectInfo.time} days.
+            </ListItem> :
+
+            item.requiredQuantity > item.currentQuantity ?
+            <ListItem>
+                <ListIcon as={WarningTwoIcon} color='yellow.500' />
+                At the unit rate of ${this.calculateCost(item)}, you can purchase {item.requiredQuantity - item.currentQuantity} {item.itemName} for ${this.calculateCost(item) * (item.requiredQuantity - item.currentQuantity)}
+            </ListItem> :
+
+            <ListItem>
+                <ListIcon as={CheckCircleIcon} color='green.500' />
+                You have enough {item.itemName} to complete your project.
+            </ListItem>
+        );
+    }
+
+    renderCosts = () => {
+        return (
+            <List spacing={3}>
+                    {
+                        this.props.projectInfo.items.map(item => (
+                            this.renderItem(item)
+                        ))
+                    }
+            </List>
         );
     }
 
@@ -118,15 +132,9 @@ export default class CostEstimate extends React.Component {
                 <Text fontSize="3xl" my="10px">Cost Estimate for {this.props.projectInfo.name}</Text>
                 <Divider mb="20px" />
 
-                    {
-                        this.props.projectInfo.items.map(item => (
-                            <span key={item.id}>
-                                {this.renderItem(item)}
-                            </span>
-                        ))
-                    }
+                {this.renderCosts()}
 
-                <Text my="10px">Based on the current market prices, your construction project will cost ${this.state.totalCost}</Text>
+                <Text my="20px">Based on the current market prices, your construction project will cost ${this.state.totalCost}.</Text>
 
                 <Flex>
                     {this.renderBackButton()}

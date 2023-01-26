@@ -52,7 +52,6 @@ export default class ItemList extends React.Component {
 
                 <Text fontSize="3xl" my="10px">{this.props.projectInfo.name}</Text>
 
-                <Text>List of Items</Text>
                 <Divider mb="20px" />
 
                 {
@@ -69,7 +68,7 @@ export default class ItemList extends React.Component {
                     ))
                 }
 
-                <Flex>
+                <Flex mt="50px">
                     {this.renderAddItemButton()}
                     <Spacer />
                     {this.renderBackButton()}

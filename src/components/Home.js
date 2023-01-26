@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Text, SimpleGrid, Button } from '@chakra-ui/react';
+import { Container, Text, SimpleGrid, Button, Divider } from '@chakra-ui/react';
 
 import ItemList from './ItemList';
 import CostEstimate from './CostEstimate';
@@ -68,11 +68,15 @@ export default class Home extends React.Component {
         return (
             <Container>
 
+
                 {
                     this.state.currentPage === 1 ?
-
+                    
                     <div>
-                        <SimpleGrid columns={2} spacing={80}>
+                        <Text fontSize="3xl" mt="50px" mb="10px">Projects</Text>
+                        <Divider mb="20px" />
+
+                        <SimpleGrid columns={2} spacing={10}>
                             {
                                 this.state.projects.map(project => (
                                     <Button 
@@ -85,7 +89,7 @@ export default class Home extends React.Component {
                                 ))
                             }
 
-                            <Button height='80px' onClick={() => this.createProject()}>Add Project</Button>
+                            <Button height='80px' onClick={() => this.createProject()}>+</Button>
 
                         </SimpleGrid>
 
