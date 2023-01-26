@@ -79,6 +79,33 @@ export default class CostEstimate extends React.Component {
         return cost;
     }
 
+    determineUnits = (item) => {
+
+        switch (item) {
+
+            case 'Concrete':
+                return 'cubic feet of ' + item.toLowerCase();
+            case 'Steel':
+                return 'tons of ' + item.toLowerCase();
+            case 'Lumber':
+                return 'thousands of board feet of ' + item.toLowerCase();
+            case 'Asphalt':
+                return 'tons of ' + item.toLowerCase();
+            case 'Brick':
+                return 'thousand ' + item.toLowerCase() + 's';
+            case 'Copper Piping':
+                return 'feet of ' + item.toLowerCase();
+            case 'Drywall':
+                return 'square feet of ' + item.toLowerCase();
+            case 'Insulation':
+                return 'square feet of ' + item.toLowerCase();
+            case 'Roofing Shingles':
+                return 'square feet of ' + item.toLowerCase();
+            default:
+                return 'select an item';
+        }
+    }
+
     renderItem = (item) => {
         return (
             item.itemName === 'Holder Name' || item.requiredQuantity === 0 ? null :
@@ -92,7 +119,7 @@ export default class CostEstimate extends React.Component {
             item.requiredQuantity > item.currentQuantity ?
             <ListItem>
                 <ListIcon as={WarningTwoIcon} color='yellow.500' />
-                At the unit rate of ${this.calculateCost(item)}, you can purchase {item.requiredQuantity - item.currentQuantity} {item.itemName} for ${this.calculateCost(item) * (item.requiredQuantity - item.currentQuantity)}
+                At the unit rate of ${this.calculateCost(item)}, you can purchase {item.requiredQuantity - item.currentQuantity} {this.determineUnits(item.itemName)} for ${this.calculateCost(item) * (item.requiredQuantity - item.currentQuantity)}
             </ListItem> :
 
             <ListItem>

@@ -50,9 +50,9 @@ export default class ItemList extends React.Component {
         );
     }
 
-    renderProcessButton = () => {
+    renderCalculateButton = () => {
         return (
-            <Button onClick={(inc) => this.props.changePage(1)}>Process</Button>
+            <Button onClick={(inc) => this.props.changePage(1)}>Calculate</Button>
         );
     }
 
@@ -86,14 +86,14 @@ export default class ItemList extends React.Component {
                         <NumberDecrementStepper />
                     </NumberInputStepper>
                 </NumberInput>
-                
+
 
                 <Flex mt="50px">
                     {this.renderAddItemButton()}
                     <Spacer />
                     {this.renderBackButton()}
                     <Spacer />
-                    {this.renderProcessButton()}
+                    {this.renderCalculateButton()}
                 </Flex>
 
 
