@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Text, Divider, Spacer, Flex, Button } from '@chakra-ui/react';
+import { Container, Text, Divider, Spacer, Flex, Button, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react';
 
 import Item from './Item';
 
@@ -10,34 +10,49 @@ export default class ItemList extends React.Component {
     
     constructor(props) {
         super(props);
+
         this.state = {
-            items: [{itemName: 'Holder Name', currentQuantity: 0, requiredQuantity: 0}],
-        };
+            labelStyles: {
+                mt: '2',
+                ml: '-2.5',
+                fontSize: 'sm',
+            }
+        }
     }
 
+    
+
     addItem = () => {
-        let newItems = [...this.state.items];
+        let newItems = [...this.props.projectInfo.items];
 
         let newItem = {
             itemName: 'Holder Name',
             currentQuantity: 0,
             requiredQuantity: 0
         };
+
         newItems.push(newItem);
 
-        this.setState({items: newItems});
+        console.log("Added Item");
+        this.props.updateProjectItems(newItems);
+
     }
 
-
-    renderAddItemButton = () => {
+    renderBackButton = () => {
         return (
-            <Button onClick={this.addItem}>Add Item</Button>
+            <Button onClick={(inc) => this.props.changePage(-1)}>Return to Projects</Button>
         );
     }
 
-    renderProcessButton = () => {
+    renderAddItemButton = () => {
         return (
-            <Button onClick={() => this.props.nextPage(1)}>Process</Button>
+            <Button onClick={() => this.addItem()}>Add Item</Button>
+        );
+    }
+
+    renderCalculateButton = () => {
+        return (
+            <Button onClick={(inc) => this.props.changePage(1)}>Calculate</Button>
         );
     }
 
@@ -45,19 +60,40 @@ export default class ItemList extends React.Component {
         return (
             <Container mt="50px" mb="0">
 
-                <Text>List of Items</Text>
+                <Text fontSize="3xl" my="10px">{this.props.projectInfo.name}</Text>
+
                 <Divider mb="20px" />
 
                 {
-                    this.state.items.map(item => (
-                        <span key={item.id}><Item></Item></span>
+                    this.props.projectInfo.items.map((item, index) => (
+                        <span key={item.id}> 
+                                <Item
+                                    updateProjectItems={(items) => this.props.updateProjectItems(items)}
+                                    items={this.props.projectInfo.items}
+                                    index={index}
+                                    >
+                                
+                                </Item>
+                        </span>
                     ))
                 }
 
-                <Flex>
+                <Text>How many days do you have to source your materials?</Text>
+                <NumberInput defaultValue={this.props.projectInfo.time} min={1} max={365} onChange={(value) => this.props.updateProjectTime(value)}>
+                    <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+
+
+                <Flex mt="50px" mb="20px">
                     {this.renderAddItemButton()}
                     <Spacer />
-                    {this.renderProcessButton()}
+                    {this.renderBackButton()}
+                    <Spacer />
+                    {this.renderCalculateButton()}
                 </Flex>
 
 
