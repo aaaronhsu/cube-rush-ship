@@ -10,13 +10,13 @@ import {
   theme,
 } from '@chakra-ui/react';
 
-import Pagination from './components/Pagination';
+import Home from './components/Home';
 
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Pagination></Pagination>
+      <Home></Home>
     </ChakraProvider>
   );
 }
