@@ -83,10 +83,10 @@ export default class CostEstimate extends React.Component {
         return (
             item.itemName === 'Holder Name' || item.requiredQuantity === 0 ? null :
             
-            item.shipTime > this.props.projectInfo.time ?
+            this.state.shipTime[item.itemName] > parseInt(this.props.projectInfo.time) ?
             <ListItem>
                 <ListIcon as={WarningIcon} color='red.500' />
-                There is not enough time have {item.itemName} shipped in {this.props.projectInfo.time} days.
+                There is not enough time have {item.itemName} shipped in {this.props.projectInfo.time} days. The item will take {this.state.shipTime[item.itemName]} days to ship.
             </ListItem> :
 
             item.requiredQuantity > item.currentQuantity ?

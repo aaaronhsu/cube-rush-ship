@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Text, Divider, Spacer, Flex, Button } from '@chakra-ui/react';
+import { Container, Text, Divider, Spacer, Flex, Button, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react';
 
 import Item from './Item';
 
@@ -10,7 +10,17 @@ export default class ItemList extends React.Component {
     
     constructor(props) {
         super(props);
+
+        this.state = {
+            labelStyles: {
+                mt: '2',
+                ml: '-2.5',
+                fontSize: 'sm',
+            }
+        }
     }
+
+    
 
     addItem = () => {
         let newItems = [...this.props.projectInfo.items];
@@ -67,6 +77,16 @@ export default class ItemList extends React.Component {
                         </span>
                     ))
                 }
+
+                <Text>How many days do you have to source your materials?</Text>
+                <NumberInput defaultValue={this.props.projectInfo.time} min={1} max={365} onChange={(value) => this.props.updateProjectTime(value)}>
+                    <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+                
 
                 <Flex mt="50px">
                     {this.renderAddItemButton()}

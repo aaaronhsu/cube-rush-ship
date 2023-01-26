@@ -60,8 +60,12 @@ export default class Home extends React.Component {
         let newProjects = [...this.state.projects];
         newProjects[this.state.currentProject].items = items;
         this.setState({projects: newProjects});
-        console.log("saved project");
-        console.log(this.state.projects[this.state.currentProject].items);
+    }
+
+    updateProjectTime = (time) => {
+        let newProjects = [...this.state.projects];
+        newProjects[this.state.currentProject].time = time;
+        this.setState({projects: newProjects});
     }
 
     render() {
@@ -103,6 +107,7 @@ export default class Home extends React.Component {
                             changePage={(inc) => this.changePage(inc)} 
                             projectInfo={this.state.projects[this.state.currentProject]}
                             updateProjectItems={(items) => this.updateProjectItems(items)}
+                            updateProjectTime={(time) => this.updateProjectTime(time)}
                         >
 
                         </ItemList>
